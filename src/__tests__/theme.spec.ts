@@ -227,21 +227,21 @@ describe('Theme Commands', () => {
         configStore.clear();
     });
 
-    // it('should successfully create new theme', async () => {
-    //     await program.parseAsync([
-    //         'ts-node',
-    //         './src/fdk.ts',
-    //         'theme',
-    //         'new',
-    //         '-t',
-    //         `${createThemeToken}`,
-    //         '-n',
-    //         'rolex',
-    //     ]);
-    //     process.chdir(`../`);
-    //     const filePath = path.join(process.cwd(), 'rolex');
-    //     expect(fs.existsSync(filePath)).toBe(true);
-    // });
+    it('should successfully create new theme', async () => {
+        await program.parseAsync([
+            'ts-node',
+            './src/fdk.ts',
+            'theme',
+            'new',
+            '-t',
+            `${createThemeToken}`,
+            '-n',
+            'rolex',
+        ]);
+        process.chdir(`../`);
+        const filePath = path.join(process.cwd(), 'rolex');
+        expect(fs.existsSync(filePath)).toBe(true);
+    });
 
     it('should successfully pull config theme', async () => {
         await createTheme();
@@ -271,15 +271,15 @@ describe('Theme Commands', () => {
         expect(configObj.application_id).toMatch(currentContext.application_id);
     });
 
-    // it('should successfully sync theme', async () => {
-    //     await createTheme();
-    //     const inquirerMock = mockFunction(inquirer.prompt);
-    //     inquirerMock.mockResolvedValue({ pullConfig: 'Yes' });
-    //     await program.parseAsync(['ts-node', './src/fdk.ts', 'theme', 'sync']);
-    //     const currentContext = getActiveContext();
-    //     process.chdir(`../`);
-    //     expect(configObj.application_id).toMatch(currentContext.application_id);
-    // });
+    it('should successfully sync theme', async () => {
+        await createTheme();
+        const inquirerMock = mockFunction(inquirer.prompt);
+        inquirerMock.mockResolvedValue({ pullConfig: 'Yes' });
+        await program.parseAsync(['ts-node', './src/fdk.ts', 'theme', 'sync']);
+        const currentContext = getActiveContext();
+        process.chdir(`../`);
+        expect(configObj.application_id).toMatch(currentContext.application_id);
+    });
 
     it('should successfully init theme', async () => {
         await program.parseAsync([
