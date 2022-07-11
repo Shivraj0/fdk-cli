@@ -66,8 +66,8 @@ const assetS3Url = assetsUploadData.upload.url;
 describe('Theme Commands', () => {
     beforeAll(async () => {
         setEnv();
-        createDirectory(path.join(__dirname, '../../.test-theme'));
-        process.chdir(`./.test-theme/`);
+        createDirectory(path.join(__dirname, '..', '..', 'test-theme'));
+        process.chdir(`./test-theme/`);
         program = await init('fdk');
         const mock = new MockAdapter(axios);
         mock.onPost(`${URLS.LOGIN_USER()}`).reply(200, data, {
@@ -187,7 +187,7 @@ describe('Theme Commands', () => {
         mock.onGet(
             `${URLS.THEME_BY_ID(appConfig.application_id, appConfig.company_id, initThemeData._id)}`
         ).reply(200, initThemeData);
-        let filePath = path.join(__dirname, 'fixtures/archive.zip');
+        let filePath = path.join(__dirname, 'fixtures', 'archive.zip');
         mock.onGet(initThemeData.src.link).reply(function () {
             return [200, fs.createReadStream(filePath)];
         });
@@ -199,7 +199,7 @@ describe('Theme Commands', () => {
                 appConfig.theme_id
             )}`
         ).reply(200, pullThemeData);
-        let zipfilePath = path.join(__dirname, '/fixtures/pull-archive.zip');
+        let zipfilePath = path.join(__dirname, 'fixtures', 'pull-archive.zip');
         mock.onGet(pullThemeData.src.link).reply(function () {
             return [200, fs.createReadStream(zipfilePath)];
         });
@@ -223,7 +223,7 @@ describe('Theme Commands', () => {
     });
 
     afterAll(() => {
-        rimraf.sync(path.join(__dirname, '../../.test-theme'));
+        rimraf.sync(path.join(__dirname, '..', '..', 'test-theme'));
         configStore.clear();
     });
 
@@ -298,7 +298,7 @@ describe('Theme Commands', () => {
     it('should successfully pull theme', async () => {
         await createTheme();
         await program.parseAsync(['ts-node', './src/fdk.ts', 'theme', 'pull']);
-        const filePath = path.join(process.cwd(), './.fdk/pull-archive.zip');
+        const filePath = path.join(process.cwd(), '.fdk', 'pull-archive.zip');
         process.chdir(`../`);
         expect(fs.existsSync(filePath)).toBe(true);
     });
