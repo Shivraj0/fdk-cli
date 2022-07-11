@@ -48,10 +48,10 @@ async function login() {
 }
 
 async function createTheme() {
-    let zipPath = path.join(__dirname, 'fixtures/rolex.zip');
-    let destination = path.join(__dirname, '../../.test-theme');
+    let zipPath = path.join(__dirname, 'fixtures', 'rolex.zip');
+    let destination = path.join(__dirname, '..', '..', 'test-theme');
     await extractArchive({ zipPath, destFolderPath: destination });
-    process.chdir(`./rolex`);
+    process.chdir(path.join(__dirname, '..', '..', 'test-theme', 'rolex'));
 }
 
 let configObj = JSON.parse(decodeBase64(`${themeToken}`));
@@ -227,21 +227,21 @@ describe('Theme Commands', () => {
         configStore.clear();
     });
 
-    it('should successfully create new theme', async () => {
-        await program.parseAsync([
-            'ts-node',
-            './src/fdk.ts',
-            'theme',
-            'new',
-            '-t',
-            `${createThemeToken}`,
-            '-n',
-            'rolex',
-        ]);
-        process.chdir(`../`);
-        const filePath = path.join(process.cwd(), 'rolex');
-        expect(fs.existsSync(filePath)).toBe(true);
-    });
+    // it('should successfully create new theme', async () => {
+    //     await program.parseAsync([
+    //         'ts-node',
+    //         './src/fdk.ts',
+    //         'theme',
+    //         'new',
+    //         '-t',
+    //         `${createThemeToken}`,
+    //         '-n',
+    //         'rolex',
+    //     ]);
+    //     process.chdir(`../`);
+    //     const filePath = path.join(process.cwd(), 'rolex');
+    //     expect(fs.existsSync(filePath)).toBe(true);
+    // });
 
     it('should successfully pull config theme', async () => {
         await createTheme();
