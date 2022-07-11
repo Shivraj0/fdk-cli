@@ -271,15 +271,15 @@ describe('Theme Commands', () => {
         expect(configObj.application_id).toMatch(currentContext.application_id);
     });
 
-    it('should successfully sync theme', async () => {
-        await createTheme();
-        const inquirerMock = mockFunction(inquirer.prompt);
-        inquirerMock.mockResolvedValue({ pullConfig: 'Yes' });
-        await program.parseAsync(['ts-node', './src/fdk.ts', 'theme', 'sync']);
-        const currentContext = getActiveContext();
-        process.chdir(`../`);
-        expect(configObj.application_id).toMatch(currentContext.application_id);
-    });
+    // it('should successfully sync theme', async () => {
+    //     await createTheme();
+    //     const inquirerMock = mockFunction(inquirer.prompt);
+    //     inquirerMock.mockResolvedValue({ pullConfig: 'Yes' });
+    //     await program.parseAsync(['ts-node', './src/fdk.ts', 'theme', 'sync']);
+    //     const currentContext = getActiveContext();
+    //     process.chdir(`../`);
+    //     expect(configObj.application_id).toMatch(currentContext.application_id);
+    // });
 
     it('should successfully init theme', async () => {
         await program.parseAsync([
