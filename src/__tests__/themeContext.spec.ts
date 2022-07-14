@@ -87,7 +87,7 @@ describe('Theme Context Commands', () => {
         const inquirerMock = mockFunction(inquirer.prompt);
         inquirerMock.mockResolvedValue({ listContext: 'fyndx0' });
         await program.parseAsync(['ts-node', './src/fdk.ts', 'theme', 'context-list']);
-        const contextPath = path.join(process.cwd(), '.fdk/context.json');
+        const contextPath = path.join(process.cwd(), '.fdk', 'context.json');
         let contextJSON = await fs.readJSON(contextPath);
         let contextObj = contextJSON.theme.active_context;
         expect(contextObj).toMatch('fyndx0');
